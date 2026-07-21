@@ -1,0 +1,14 @@
+{
+    "name":"OllieCat",
+    "image":"mcr.microsoft.com/devcontainers/rust:latest",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": { "version": "lts" }
+  },
+    "postCreateCommand": "rustup target add wasm32-unknown-unknown && cargo install wasm-pack",
+  "customizations": {
+    "vscode": {
+      "extensions": ["rust-lang.rust-analyzer", "dbaeumer.vscode-eslint"]
+    }
+  }
+}
+    
