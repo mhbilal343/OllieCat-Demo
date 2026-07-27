@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <script type="module">
+    import init, { crossmatch_flat } from './pkg/xmatch.js';
+
+    async function run() {
+      await init();
+
+      const raA = new Float64Array([10.0]);
+      const decA = new Float64Array([20.0]);
+      const raB = new Float64Array([10.0001]);
+      const decB = new Float64Array([20.0001]);
+
+      const result = crossmatch_flat(raA, decA, raB, decB, 5.0);
+
+      console.log('Raw result:', result);
+      document.body.innerHTML = `<pre>${JSON.stringify(Array.from(result))}</pre>`;
+    }
+
+    run();
+  </script>
+</body>
+</html>

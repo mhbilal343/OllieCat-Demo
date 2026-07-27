@@ -1,3 +1,5 @@
+use wasm_bindgen::prelude::*;
+
 pub struct MatchResult {
     pub index_a: u32,
     pub index_b: u32,
@@ -39,6 +41,22 @@ fn angular_separation_arcsec(ra1: f64, dec1: f64, ra2: f64, dec2: f64) -> f64 {
         + dec1_rad.cos() * dec2_rad.cos() * d_ra.cos();
     let sep_rad = cos_sep.clamp(-1.0, 1.0).acos();
     sep_rad.to_degrees() * 3600.0
+}
+
+#[wasm_bindgen]
+pub fn crossmatch_flat(
+    ra_a: &[f64], dec_a: &[f64],
+    ra_b: &[f64], dec_b: &[f64],
+    radius_arcsec: f64,
+) -> Vec<f64> {
+    let matches = crossmatch(ra_a, dec_a, ra_b, dec_b, radius_arcsec);
+    let mut flat = Vec::with_capacity(matches.len() * 3);
+    for m in matches {
+        flat.push(m.index_a as f64);
+        flat.push(m.index_b as f64);
+        flat.push(m.separation_arcsec);
+    }
+    flat
 }
 
 #[cfg(test)]
